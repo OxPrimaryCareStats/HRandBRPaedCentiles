@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>Paediatric Centiles of Normal Heart Rate and Respiratory Rate</title>
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="jquery-ui.min.js"></script>
+    <script type="text/javascript" src="heartrates.js"></script>
+    <script type="text/javascript" src="resprates.js"></script>
+
+    <script type="text/javascript">
+
+    /* This work is licenced under the Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License. 
+    *  To view a copy of this licence, visit http://creativecommons.org/licenses/by-nc-nd/3.0/ 
+    *  or send a letter to Creative Commons, 171 Second Street, Suite 300, San Francisco, California 94105, USA.
+    */
+
+        // This is what'll do the lookup and the maths.
+        var heartRateCalc = function(units) {
+                // Grab the data from the form using the jquery library we imported earlier.
+                var data = $("#agevalue").val();
+
+                var alertdiv = document.getElementById("alertDiv");
+                //Calculate heart rate
+                var hrmedian = FindHeartRates.find(data,units,"median");
+                if(hrmedian == undefined) {
+                        alertdiv.innerHTML = ("Only ages from 0 to 18 years are supported. <BR>");
+                } else { 
+                        alertdiv.innerHTML = ("");
+                            
+                        var resultstab = document.getElementById("centiletable");
+                        // is there a table already?
+                        if (resultstab===null) {
+                            // create table
+                            var rows={};
+                            var cells={};
+                            var newtab=document.createElement('table');
+                            newtab.setAttribute('id','centiletable');
+
+                            var tbody=document.createElement('tbody');
+
+                            for(r=0;r<8;r++){
+                                rows[r]=document.createElement('tr');
+
+                                for(c=0;c<3;c++) {
+                                    cells[c]=document.createElement('td');
+                                    cells[c].innerHTML="x";
+                                    rows[r].appendChild(cells[c]);
+                                }
+                                tbody.appendChild(rows[r]);
+                            }
+                            newtab.appendChild(tbody);
+                            document.getElementById('tableDiv').appendChild(newtab);
+                            resultstab = document.getElementById("centiletable");
+                        }
+                        
+                        msg = document.getElementById("messageDiv");
+                        msg.innerHTML = "Centiles for children aged " + data + " " + units + ": <BR>";   
+                        
+                        // set table data
+                        var row0 = resultstab.rows[0].cells;
+                        row0[0].innerHTML = "Centile";
+                        row0[1].innerHTML = "Heart rate (bpm)";
+                        row0[2].innerHTML = "Respiratory rate (bpm)"
+                        var centiletext = ["1st","10th","25th","Median","75th","90th","99th"];
+                        var centiledef = ["centile1","centile10","centile25","median","centile75","centile90","centile99"];
+
+                        for (i=0; i<7; i++) {
+                            var thisrow = resultstab.rows[i+1].cells;
+                            thisrow[0].innerHTML = centiletext[i];
+                            thisrow[1].innerHTML = Math.round(FindHeartRates.find(data,units,centiledef[i]));
+                            thisrow[2].innerHTML = Math.round(FindRespRates.find(data,units,centiledef[i]));
+                        }
+                                                
+
+                }
+                
+        }
+    </script>
+  </head>
+  <body>
+          <div id="someDivElement">
+          Enter age and press the appropriate button to calculate heart rate centiles: <br>
+                  <input type="text" id="agevalue"/><br>
+                  <input type="button" value="years" id="yearsButton" onClick="heartRateCalc('years')" />
+                  <input type="button" value="months" id="monthsButton" onClick="heartRateCalc('months')" />
+                  <input type="button" value="weeks" id="weeksButton" onClick="heartRateCalc('weeks')" />
+                  <input type="button" value="days" id="daysButton" onClick="heartRateCalc('days')" />
+          </div>
+          <div id="alertDiv">
+          </div>
+          <div id="messageDiv">
+          </div>
+          <div id="tableDiv">
+          </div>
+
+          <div id="cclicense">
+            <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/"><img alt="Creative Commons Licence" style="border-width:0" src="88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/InteractiveResource" property="dct:title" rel="dct:type">Heart rate and respiratory rate calculator</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="http://www.madox.org" property="cc:attributionName" rel="cc:attributionURL">Susannah Fleming</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/">Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License</a>.<br />Permissions beyond the scope of this license may be available at <a xmlns:cc="http://creativecommons.org/ns#" href="http://www.madox.org" rel="cc:morePermissions">www.madox.org</a>.
+            </a>
+  </body>
+</html>
