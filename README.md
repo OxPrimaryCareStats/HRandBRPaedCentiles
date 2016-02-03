@@ -10,7 +10,12 @@ The most commonly requested file is the [excel file of centile data](https://git
 
 You can download other individual files by clicking on the file name, and then clicking the "RAW" button.
 
-Included files:
+*Use and attribution*
+The data and code in this repository is made available under the GPLv3 license.  You are free to use, modify, and share these materials.  We ask that you reference the published paper (above) if you use the materials in a publication or publicly available material.
+
+If you find this material particularly useful, we'd love to hear about it!  
+
+*Included files:*
 
 **DATA**
 
