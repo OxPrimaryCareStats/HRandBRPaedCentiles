@@ -18,6 +18,10 @@ If you find this material particularly useful, we'd love to hear about it!
 
 *Included files:*
 
+**CHARTS**
+*Centilecharts.pdf*
+Printable PDF file containing charts of HR and BR centiles from birth to 18 years (charts show median with 1st, 10th, 25th, 75th, 90th and 99 centiles.)
+
 **DATA**
 
 *kernelagecorrection.mat*    
